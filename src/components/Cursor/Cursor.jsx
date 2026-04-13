@@ -6,13 +6,17 @@ export default function Cursor() {
   const dotRef = useRef(null)
   const [hovered, setHovered] = useState(false)
   const [clicked, setClicked] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
   const pos = useRef({ x: 0, y: 0 })
   const dot = useRef({ x: 0, y: 0 })
   const raf = useRef(null)
 
   useEffect(() => {
-    const isMobile = window.matchMedia('(pointer: coarse)').matches
-    if (isMobile) return
+    const isCoarse = window.matchMedia('(pointer: coarse)').matches
+    if (isCoarse) {
+      setIsMobile(true)
+      return
+    }
 
     const onMove = (e) => {
       pos.current = { x: e.clientX, y: e.clientY }
@@ -60,6 +64,8 @@ export default function Cursor() {
       if (raf.current) cancelAnimationFrame(raf.current)
     }
   }, [])
+
+  if (isMobile) return null
 
   return (
     <>

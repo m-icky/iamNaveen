@@ -223,7 +223,7 @@ export default function App() {
         {/* ─── 2-3. Horizontal: About → Tech Stack (scroll RIGHT) ─── */}
         <div ref={hSection1Ref} className="horizontal-section">
           <div ref={hTrack1Ref} className="horizontal-track">
-            <div className="horizontal-panel">
+            <div className="horizontal-panel horizontal-panel--scrollable">
               <About />
             </div>
             <div className="horizontal-panel">
