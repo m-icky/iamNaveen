@@ -5,7 +5,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Lanyard from '../ReactBits/Lanyard'
 import CircularText from '../ReactBits/CircularText'
 import TextType from '../ReactBits/TextType'
-// import TextPressure from '../ReactBits/TextPressure'
 
 const HeroThreeScene = lazy(() => import('../ThreeScene/ThreeScene').then(m => ({ default: m.default })))
 
@@ -85,6 +84,7 @@ export default function Hero() {
       ref={heroRef}
       className="relative w-full min-h-screen flex items-center justify-center overflow-hidden"
       style={{ background: 'var(--bg)' }}
+      id="home"
     >
       {/* Scroll-controlled video */}
       <video
@@ -176,7 +176,7 @@ export default function Hero() {
               className="max-w-md mb-10"
             >
               <TextType
-                text="Building interactive web experiences using React, Three.js and modern animation systems."
+                text="Building interactive web experiences using React, Tailwind CSS and modern animation systems."
                 as="p"
                 className="leading-relaxed"
                 style={{ color: 'var(--muted)', fontSize: '1rem' }}
@@ -215,7 +215,7 @@ export default function Hero() {
           initial={{ opacity: 0, x: 60, y: -20 }}
           animate={{ opacity: 1, x: 0, y: 0 }}
           transition={{ delay: 1.0, duration: 1.2, ease: [0.23, 1, 0.32, 1] }}
-          className="hidden md:flex flex-col items-center flex-shrink-0"
+          className="absolute top-5 right-0 lg:right-24 hidden md:flex flex-col items-center z-40"
         >
           {/* Wall clip/mount */}
           <div style={{

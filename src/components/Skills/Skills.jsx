@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
+import LogoLoop from '../ReactBits/LogoLoop'
 
 const skills = [
   { name: 'React JS', icon: '⚛️', level: 95, color: '#61DAFB', desc: 'Advanced component architecture, hooks, performance optimization' },
@@ -86,7 +87,12 @@ function SkillCard({ skill, index }) {
 export default function Skills() {
   return (
     <section id="skills" className="section-pad relative" style={{ background: 'var(--bg)' }}>
-      <div className="max-w-7xl mx-auto px-8">
+      {/* Animated background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="bg-orb bg-orb--7" />
+        <div className="bg-orb bg-orb--8" />
+      </div>
+      <div className="relative z-10 mx-auto px-8" style={{maxWidth: '100vw' }}>
         {/* Section label */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -129,6 +135,14 @@ export default function Skills() {
           {skills.map((skill, i) => (
             <SkillCard key={skill.name} skill={skill} index={i} />
           ))}
+        </div>
+
+        {/* Logo Loop Marquee — embedded at bottom */}
+        <div className="mt-10 pt-8 border-t" style={{ borderColor: 'var(--border)' }}>
+          <LogoLoop speed={28} direction="left" size={40} gap={8} />
+          <div className="mt-4">
+            <LogoLoop speed={22} direction="right" size={40} gap={8} />
+          </div>
         </div>
       </div>
     </section>

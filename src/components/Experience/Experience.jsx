@@ -36,25 +36,24 @@ const experiences = [
 
 function TimelineItem({ exp, index, isLast }) {
   const ref = useRef(null)
-  const inView = useInView(ref, { once: true, margin: '-80px' })
+  const inView = useInView(ref, { once: true, margin: '-40px' })
 
   return (
-    <div ref={ref} className="relative flex gap-8 md:gap-16">
+    <div ref={ref} className="relative flex gap-5 md:gap-10">
       {/* Timeline line */}
       <div className="flex flex-col items-center">
-        {/* Dot */}
         <motion.div
           initial={{ scale: 0 }}
           animate={inView ? { scale: 1 } : { scale: 0 }}
           transition={{ duration: 0.5, type: 'spring', stiffness: 300 }}
           className="relative z-10 flex-shrink-0"
           style={{
-            width: 20,
-            height: 20,
+            width: 16,
+            height: 16,
             borderRadius: '50%',
             background: exp.color,
-            boxShadow: `0 0 20px ${exp.color}80`,
-            marginTop: 8,
+            boxShadow: `0 0 16px ${exp.color}80`,
+            marginTop: 6,
           }}
         >
           {exp.current && (
@@ -63,14 +62,13 @@ function TimelineItem({ exp, index, isLast }) {
               transition={{ duration: 2, repeat: Infinity }}
               style={{
                 position: 'absolute',
-                inset: -4,
+                inset: -3,
                 borderRadius: '50%',
                 border: `2px solid ${exp.color}`,
               }}
             />
           )}
         </motion.div>
-        {/* Vertical line */}
         {!isLast && (
           <motion.div
             initial={{ height: 0 }}
@@ -79,7 +77,7 @@ function TimelineItem({ exp, index, isLast }) {
             style={{
               width: 1,
               flex: 1,
-              marginTop: 8,
+              marginTop: 4,
               background: `linear-gradient(to bottom, ${exp.color}40, transparent)`,
             }}
           />
@@ -88,24 +86,23 @@ function TimelineItem({ exp, index, isLast }) {
 
       {/* Content */}
       <motion.div
-        initial={{ opacity: 0, x: 40 }}
-        animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: 40 }}
+        initial={{ opacity: 0, x: 30 }}
+        animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
         transition={{ duration: 0.8, delay: 0.2, ease: [0.23, 1, 0.32, 1] }}
-        className="pb-16 flex-1"
+        className="pb-6 flex-1"
       >
-        <div className="glass rounded-3xl p-8" style={{ border: `1px solid ${exp.color}20` }}>
-          {/* Header */}
-          <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-6">
+        <div className="glass rounded-2xl p-5" style={{ border: `1px solid ${exp.color}20` }}>
+          <div className="flex flex-col md:flex-row md:items-start justify-between gap-2 mb-3">
             <div>
-              <h3 className="font-display mb-1" style={{ fontSize: 'clamp(24px, 4vw, 40px)', color: exp.color, letterSpacing: '0.04em' }}>
+              <h3 className="font-display mb-0.5" style={{ fontSize: 'clamp(18px, 3vw, 28px)', color: exp.color, letterSpacing: '0.04em' }}>
                 {exp.role}
               </h3>
-              <p className="font-body text-lg" style={{ color: 'var(--fg)' }}>{exp.company}</p>
-              <p className="font-mono text-xs mt-1" style={{ color: 'var(--muted)' }}>{exp.location}</p>
+              <p className="font-body text-sm" style={{ color: 'var(--fg)' }}>{exp.company}</p>
+              <p className="font-mono text-xs mt-0.5" style={{ color: 'var(--muted)' }}>{exp.location}</p>
             </div>
-            <div className="flex flex-col items-start md:items-end gap-2">
+            <div className="flex flex-col items-start md:items-end gap-1">
               <span
-                className="font-mono text-xs px-4 py-2 rounded-full flex-shrink-0"
+                className="font-mono text-xs px-3 py-1 rounded-full flex-shrink-0"
                 style={{
                   background: `${exp.color}15`,
                   color: exp.color,
@@ -120,18 +117,17 @@ function TimelineItem({ exp, index, isLast }) {
             </div>
           </div>
 
-          {/* Highlights */}
-          <div className="space-y-3">
+          <div className="space-y-1.5">
             {exp.highlights.map((h, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, x: 20 }}
+                initial={{ opacity: 0, x: 15 }}
                 animate={inView ? { opacity: 1, x: 0 } : {}}
-                transition={{ delay: 0.4 + i * 0.08 }}
-                className="flex items-start gap-3"
+                transition={{ delay: 0.3 + i * 0.06 }}
+                className="flex items-start gap-2"
               >
-                <div className="flex-shrink-0 mt-2" style={{ width: 4, height: 4, borderRadius: '50%', background: exp.color }} />
-                <p className="text-sm leading-relaxed" style={{ color: 'var(--muted)' }}>{h}</p>
+                <div className="flex-shrink-0 mt-1.5" style={{ width: 3, height: 3, borderRadius: '50%', background: exp.color }} />
+                <p className="text-xs leading-relaxed" style={{ color: 'var(--muted)' }}>{h}</p>
               </motion.div>
             ))}
           </div>
@@ -143,14 +139,20 @@ function TimelineItem({ exp, index, isLast }) {
 
 export default function Experience() {
   return (
-    <section id="experience" className="section-pad relative" style={{ background: 'var(--bg)' }}>
-      <div className="max-w-5xl mx-auto px-8">
+    <section id="experience" className="relative w-full" style={{ background: 'var(--bg)' }}>
+      {/* Animated background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="bg-orb bg-orb--5" />
+        <div className="bg-orb bg-orb--6" />
+      </div>
+
+      <div className="relative z-10 max-w-5xl mx-auto px-8 py-16">
         {/* Section label */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          className="flex items-center gap-4 mb-8"
+          className="flex items-center gap-4 mb-4"
         >
           <div style={{ width: 40, height: 1, background: 'var(--accent)' }} />
           <span className="font-mono text-xs tracking-widest uppercase" style={{ color: 'var(--accent)' }}>
@@ -158,7 +160,7 @@ export default function Experience() {
           </span>
         </motion.div>
 
-        <div className="mb-16">
+        <div className="mb-6">
           <div className="overflow-hidden">
             <motion.h2
               initial={{ y: '100%' }}
@@ -166,7 +168,7 @@ export default function Experience() {
               viewport={{ once: true }}
               transition={{ duration: 0.9, ease: [0.23, 1, 0.32, 1] }}
               className="font-display leading-none"
-              style={{ fontSize: 'clamp(48px, 8vw, 120px)', color: 'var(--fg)' }}
+              style={{ fontSize: 'clamp(32px, 5vw, 64px)', color: 'var(--fg)' }}
             >
               WHERE I'VE
             </motion.h2>
@@ -178,7 +180,7 @@ export default function Experience() {
               viewport={{ once: true }}
               transition={{ duration: 0.9, delay: 0.1, ease: [0.23, 1, 0.32, 1] }}
               className="font-display leading-none gradient-text"
-              style={{ fontSize: 'clamp(48px, 8vw, 120px)' }}
+              style={{ fontSize: 'clamp(32px, 5vw, 64px)' }}
             >
               WORKED
             </motion.h2>
@@ -194,23 +196,21 @@ export default function Experience() {
 
         {/* Education row */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-4 glass rounded-3xl p-8"
+          className="mt-2 glass rounded-2xl p-5"
           style={{ border: '1px solid var(--border)' }}
         >
-          <div className="flex items-center gap-4 mb-4">
-            <span style={{ fontSize: 32 }}>🎓</span>
-            <div>
-              <h4 className="font-display text-xl" style={{ color: 'var(--accent)' }}>EDUCATION</h4>
-            </div>
+          <div className="flex items-center gap-3 mb-2">
+            <span style={{ fontSize: 24 }}>🎓</span>
+            <h4 className="font-display text-lg" style={{ color: 'var(--accent)' }}>EDUCATION</h4>
           </div>
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-2 gap-4">
             <div>
-              <p className="font-body" style={{ color: 'var(--fg)' }}>Electronics & Communication Engineering (B.Tech)</p>
-              <p className="font-mono text-sm" style={{ color: 'var(--muted)' }}>Mar Athanasius College of Engineering, Ernakulam</p>
-              <p className="font-mono text-xs mt-1" style={{ color: 'var(--accent)' }}>2018 — 2022</p>
+              <p className="font-body text-sm" style={{ color: 'var(--fg)' }}>Electronics & Communication Engineering (B.Tech)</p>
+              <p className="font-mono text-xs" style={{ color: 'var(--muted)' }}>Mar Athanasius College of Engineering, Ernakulam</p>
+              <p className="font-mono text-xs mt-0.5" style={{ color: 'var(--accent)' }}>2018 — 2022</p>
             </div>
             <div className="flex flex-wrap gap-2">
               {['IPSR — Advanced Web Dev (PHP)', 'Cyber Prism — Python/Django'].map(cert => (

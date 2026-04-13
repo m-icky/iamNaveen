@@ -3,15 +3,23 @@
  * An interactive ID badge hanging on a rope with mouse-based physics
  */
 import { useRef, useEffect, useState, useCallback } from 'react'
-import { motion, useSpring, useTransform } from 'framer-motion'
+import { motion, useSpring, useTransform, useMotionTemplate } from 'framer-motion'
+import myPic from '../../assets/my-pic.jpeg'
 
-const CARD_W = 200
-const CARD_H = 280
-const ROPE_H = 120
+const CARD_W = 300
+const CARD_H = 450
+const ROPE_H = 150
 
-function RopeSVG({ swing }) {
-  // Bezier rope that sways with card
-  const cx = useTransform(swing, v => 50 + v * 30)
+function RopeSVG({ x, y }) {
+  // SVG viewBox width is 100, while CARD_W is 200, meaning 1 SVG unit = 2 pixels.
+  // So we multiply pixel coords by 0.5
+  const endX = useTransform(x, v => 50 + v * 0.5)
+  const endY = useTransform(y, v => ROPE_H + v * 0.5)
+  
+  const cx = useTransform(x, v => 50 + v * 0.25)
+  const cy = useTransform(y, v => ROPE_H * 0.5 + v * 0.25)
+
+  const pathD = useMotionTemplate`M 50 0 Q ${cx} ${cy} ${endX} ${endY}`
 
   return (
     <svg
@@ -21,16 +29,10 @@ function RopeSVG({ swing }) {
       style={{ display: 'block', overflow: 'visible' }}
     >
       <motion.path
-        d={`M 50 0 Q ${50} ${ROPE_H / 2} 50 ${ROPE_H}`}
         stroke="rgba(232,255,0,0.5)"
         strokeWidth="2"
         fill="none"
-        style={{
-          d: useTransform(
-            swing,
-            v => `M 50 0 Q ${50 + v * 25} ${ROPE_H * 0.6} 50 ${ROPE_H}`
-          ),
-        }}
+        style={{ d: pathD }}
       />
     </svg>
   )
@@ -46,7 +48,21 @@ export default function Lanyard({ className = '' }) {
   const x = useSpring(0, { stiffness: 80, damping: 18, mass: 0.8 })
   const y = useSpring(0, { stiffness: 60, damping: 14, mass: 1 })
   const rotateZ = useTransform(x, [-120, 0, 120], [-25, 0, 25])
-  const swingVal = useTransform(x, [-120, 0, 120], [-1, 0, 1])
+
+  // Infinite pendulum loop
+  useEffect(() => {
+    if (dragging) return
+    let t = 0
+    let raf
+    const loop = () => {
+      t += 0.02
+      // gently drive the target of the spring in a sine wave
+      x.set(Math.sin(t) * 15)
+      raf = requestAnimationFrame(loop)
+    }
+    loop()
+    return () => cancelAnimationFrame(raf)
+  }, [dragging, x])
 
   const onPointerDown = useCallback((e) => {
     setDragging(true)
@@ -65,9 +81,9 @@ export default function Lanyard({ className = '' }) {
 
   const onPointerUp = useCallback(() => {
     setDragging(false)
-    x.set(0)
+    // Only zero out Y. X is handled by the pendulum effect taking over
     y.set(0)
-  }, [x, y])
+  }, [y])
 
   return (
     <div
@@ -78,7 +94,7 @@ export default function Lanyard({ className = '' }) {
       {/* Rope */}
       <div style={{ width: CARD_W, height: ROPE_H, position: 'relative', overflow: 'visible' }}>
         <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', width: '100%' }}>
-          <RopeSVG swing={swingVal} />
+          <RopeSVG x={x} y={y} />
         </div>
       </div>
 
@@ -121,7 +137,7 @@ export default function Lanyard({ className = '' }) {
 
           {/* Avatar / initials */}
           <div style={{
-            width: 70, height: 70, borderRadius: '50%',
+            width: 150, height: 150, borderRadius: '50%',
             background: 'linear-gradient(135deg, #E8FF00, #FF3CAC)',
             margin: '10px auto 8px',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -129,7 +145,7 @@ export default function Lanyard({ className = '' }) {
             color: '#0A0A0A',
             boxShadow: '0 0 20px rgba(232,255,0,0.3)',
           }}>
-            Naveen
+            <img src={myPic} alt="myPic" style={{ borderRadius: '50%', padding: '3px' }} className='w-full h-full object-cover' />
           </div>
 
           {/* Name */}
@@ -156,8 +172,11 @@ export default function Lanyard({ className = '' }) {
 
           {/* Info rows */}
           {[
-            { label: 'Stack', value: 'React · Three.js' },
+            { label: 'Stack', value: 'React · Tailwind CSS' },
             { label: 'Exp',   value: '3+ Years' },
+            { label: 'passion',   value: 'Building scalable UI & design systems' },
+            { label: 'status',   value: 'Available for freelance & collaborations' },
+            { label: 'contact',   value: 'naveentmadhu@gmail.com' },
             { label: 'Base',  value: 'Kerala, IN' },
           ].map(row => (
             <div key={row.label} style={{
@@ -176,7 +195,7 @@ export default function Lanyard({ className = '' }) {
           {/* Barcode */}
           <div style={{ margin: '10px 16px 0', height: 28, background: 'repeating-linear-gradient(90deg, rgba(232,255,0,0.6) 0px, rgba(232,255,0,0.6) 2px, transparent 2px, transparent 5px)', borderRadius: 2 }} />
           <div style={{ textAlign: 'center', fontFamily: 'DM Mono, monospace', fontSize: 8, color: 'rgba(232,255,0,0.4)', marginTop: 4 }}>
-            Naveen-2025-FEND
+            Naveen-Frontend-Engineer-2026
           </div>
 
           {/* Noise texture overlay */}

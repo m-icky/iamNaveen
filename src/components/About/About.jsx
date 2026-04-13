@@ -4,11 +4,9 @@ import Resume from '../../Naveen T M CV.pdf'
 
 const AboutThreeScene = lazy(() => import('../ThreeScene/ThreeScene').then(m => ({ default: m.AboutThreeScene })))
 
-const words = ['React', 'Three.js', 'Framer', 'Motion', 'UI', 'Systems', 'Design', 'Code']
-
 export default function About() {
   const ref = useRef(null)
-  const inView = useInView(ref, { once: true, margin: '-100px' })
+  const inView = useInView(ref, { once: true, margin: '-50px' })
 
   const containerVariants = {
     hidden: {},
@@ -21,15 +19,21 @@ export default function About() {
   }
 
   return (
-    <section id="about" className="section-pad relative" style={{ background: 'var(--bg)' }}>
-      <div className="max-w-7xl mx-auto px-8">
+    <section id="about" className="relative w-full" style={{ background: 'var(--bg)' }}>
+      {/* Animated background gradient orbs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="bg-orb bg-orb--1" />
+        <div className="bg-orb bg-orb--2" />
+      </div>
+
+      <div className="relative z-10 max-w-7xl mx-auto px-8 py-16">
         {/* Section label */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="flex items-center gap-4 mb-20"
+          className="flex items-center gap-4 mb-8"
         >
           <div style={{ width: 40, height: 1, background: 'var(--accent)' }} />
           <span className="font-mono text-xs tracking-widest uppercase" style={{ color: 'var(--accent)' }}>
@@ -37,7 +41,7 @@ export default function About() {
           </span>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
           {/* Left: Text */}
           <div ref={ref}>
             <motion.div
@@ -45,29 +49,29 @@ export default function About() {
               initial="hidden"
               animate={inView ? 'show' : 'hidden'}
             >
-              <div className="overflow-hidden mb-4">
+              <div className="overflow-hidden mb-2">
                 <motion.h2
                   variants={lineVariants}
                   className="font-display leading-none"
-                  style={{ fontSize: 'clamp(48px, 7vw, 100px)', color: 'var(--fg)' }}
+                  style={{ fontSize: 'clamp(36px, 5vw, 72px)', color: 'var(--fg)' }}
                 >
                   CRAFTING
                 </motion.h2>
               </div>
-              <div className="overflow-hidden mb-4">
+              <div className="overflow-hidden mb-2">
                 <motion.h2
                   variants={lineVariants}
                   className="font-display leading-none gradient-text"
-                  style={{ fontSize: 'clamp(48px, 7vw, 100px)' }}
+                  style={{ fontSize: 'clamp(36px, 5vw, 72px)' }}
                 >
                   DIGITAL
                 </motion.h2>
               </div>
-              <div className="overflow-hidden mb-12">
+              <div className="overflow-hidden mb-6">
                 <motion.h2
                   variants={lineVariants}
                   className="font-display leading-none"
-                  style={{ fontSize: 'clamp(48px, 7vw, 100px)', color: 'var(--fg)' }}
+                  style={{ fontSize: 'clamp(36px, 5vw, 72px)', color: 'var(--fg)' }}
                 >
                   EXPERIENCES
                 </motion.h2>
@@ -75,8 +79,8 @@ export default function About() {
 
               <motion.p
                 variants={lineVariants}
-                className="text-lg leading-relaxed mb-6"
-                style={{ color: 'var(--muted)', maxWidth: 480 }}
+                className="text-sm leading-relaxed mb-3"
+                style={{ color: 'var(--muted)', maxWidth: 440 }}
               >
                 Frontend Engineer with 3+ years of experience building complex web applications.
                 Specialized in collaborative document editors, real-time UI systems, and
@@ -85,25 +89,25 @@ export default function About() {
 
               <motion.p
                 variants={lineVariants}
-                className="leading-relaxed mb-10"
-                style={{ color: 'var(--muted)', maxWidth: 480 }}
+                className="text-sm leading-relaxed mb-6"
+                style={{ color: 'var(--muted)', maxWidth: 440 }}
               >
                 Currently at RSGP Consulting, where I led the full frontend engineering of a
                 Google Docs–style editor using React, ProseMirror and TipTap — with real-time
                 collaboration, tracked changes, and structured XML export.
               </motion.p>
 
-              <motion.div variants={lineVariants} className="flex items-center gap-4">
+              <motion.div variants={lineVariants} className="flex items-center gap-3 flex-wrap">
                 <a
                   href={Resume}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="glass px-6 py-3 rounded-full font-mono text-sm tracking-wider uppercase"
+                  className="glass px-5 py-2.5 rounded-full font-mono text-xs tracking-wider uppercase"
                   style={{ color: 'var(--accent)', border: '1px solid var(--accent)' }}
                 >
                   View CV
                 </a>
-                <div className="flex gap-3">
+                <div className="flex gap-2">
                   {['Ernakulam', 'Kerala'].map(tag => (
                     <span key={tag} className="glass px-3 py-1.5 rounded-full font-mono text-xs" style={{ color: 'var(--muted)' }}>
                       {tag}
@@ -121,7 +125,7 @@ export default function About() {
             viewport={{ once: true }}
             transition={{ duration: 1.2, ease: [0.23, 1, 0.32, 1] }}
             className="relative"
-            style={{ height: 480 }}
+            style={{ height: 'clamp(280px, 40vh, 400px)' }}
           >
             {/* Glow backdrop */}
             <div
@@ -142,21 +146,21 @@ export default function About() {
 
             {/* Floating stats */}
             <motion.div
-              animate={{ y: [0, -8, 0] }}
+              animate={{ y: [0, -6, 0] }}
               transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-              className="absolute -bottom-6 -left-6 glass rounded-2xl p-4"
+              className="absolute -bottom-4 -left-4 glass rounded-2xl p-3"
               style={{ border: '1px solid var(--border)' }}
             >
-              <div className="font-display text-3xl" style={{ color: 'var(--accent)' }}>3+</div>
+              <div className="font-display text-2xl" style={{ color: 'var(--accent)' }}>3+</div>
               <div className="font-mono text-xs" style={{ color: 'var(--muted)' }}>Years Exp.</div>
             </motion.div>
             <motion.div
-              animate={{ y: [0, 8, 0] }}
+              animate={{ y: [0, 6, 0] }}
               transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
-              className="absolute -top-6 -right-6 glass rounded-2xl p-4"
+              className="absolute -top-4 -right-4 glass rounded-2xl p-3"
               style={{ border: '1px solid var(--border)' }}
             >
-              <div className="font-display text-3xl" style={{ color: 'var(--accent)' }}>25+</div>
+              <div className="font-display text-2xl" style={{ color: 'var(--accent)' }}>25+</div>
               <div className="font-mono text-xs" style={{ color: 'var(--muted)' }}>Projects</div>
             </motion.div>
           </motion.div>

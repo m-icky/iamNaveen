@@ -138,7 +138,83 @@ body::before {
   }
 }
 
-/* Horizontal scroll container */
+/* ───── Horizontal Scroll Sections (GSAP pinned) ───── */
+
+.horizontal-section {
+  overflow: hidden;
+}
+
+.horizontal-track {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.horizontal-panel {
+  width: 100vw;
+  min-height: 100vh;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Internal overflow for panels with lots of content */
+.horizontal-panel--scrollable {
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  align-items: flex-start;
+  padding-top: 80px;
+  padding-bottom: 40px;
+}
+.horizontal-panel--scrollable::-webkit-scrollbar {
+  display: none;
+}
+
+/* Direction hint overlay */
+.direction-hint {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.direction-hint.visible {
+  opacity: 1;
+}
+.direction-hint__label {
+  font-family: "DM Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.direction-hint__arrow {
+  color: var(--accent);
+  animation: bounceArrow 1.4s ease-in-out infinite;
+}
+
+@keyframes bounceArrow {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(8px); }
+}
+.direction-hint--left .direction-hint__arrow {
+  animation: bounceArrowLeft 1.4s ease-in-out infinite;
+}
+@keyframes bounceArrowLeft {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(-8px); }
+}
+
+/* Horizontal scroll container for project cards */
 .horizontal-scroll {
   display: flex;
   gap: 24px;
@@ -153,24 +229,12 @@ body::before {
 
 /* Animated gradient text */
 @keyframes gradientShift {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
-
 .gradient-text {
-  background: linear-gradient(
-    135deg,
-    var(--accent),
-    var(--accent-alt),
-    var(--accent)
-  );
+  background: linear-gradient(135deg, var(--accent), var(--accent-alt), var(--accent));
   background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -180,14 +244,9 @@ body::before {
 
 /* Draw line animation */
 @keyframes drawLine {
-  from {
-    width: 0;
-  }
-  to {
-    width: 100%;
-  }
+  from { width: 0; }
+  to { width: 100%; }
 }
-
 .draw-line {
   animation: drawLine 1.5s ease forwards;
 }
@@ -207,4 +266,149 @@ body::before {
   width: 100%;
   height: 100%;
   pointer-events: none;
+}
+
+/* ───── Animated Background Orbs ───── */
+.bg-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.07;
+  will-change: transform;
+}
+
+/* About section orbs */
+.bg-orb--1 {
+  width: 500px;
+  height: 500px;
+  background: var(--accent);
+  top: -10%;
+  right: -5%;
+  animation: floatOrb1 12s ease-in-out infinite;
+}
+.bg-orb--2 {
+  width: 400px;
+  height: 400px;
+  background: var(--accent-alt);
+  bottom: -10%;
+  left: -5%;
+  animation: floatOrb2 15s ease-in-out infinite;
+}
+
+/* GitHub section orbs */
+.bg-orb--3 {
+  width: 450px;
+  height: 450px;
+  background: #39d353;
+  top: 10%;
+  left: 10%;
+  animation: floatOrb1 14s ease-in-out infinite;
+}
+.bg-orb--4 {
+  width: 350px;
+  height: 350px;
+  background: #06B6D4;
+  bottom: 10%;
+  right: 10%;
+  animation: floatOrb2 11s ease-in-out infinite;
+}
+
+/* Experience section orbs */
+.bg-orb--5 {
+  width: 500px;
+  height: 500px;
+  background: #7C3AED;
+  top: -5%;
+  left: -10%;
+  animation: floatOrb2 13s ease-in-out infinite;
+}
+.bg-orb--6 {
+  width: 400px;
+  height: 400px;
+  background: var(--accent);
+  bottom: -5%;
+  right: -10%;
+  animation: floatOrb1 16s ease-in-out infinite;
+}
+
+/* Skills section orbs */
+.bg-orb--7 {
+  width: 500px;
+  height: 500px;
+  background: #61DAFB;
+  top: -15%;
+  right: 20%;
+  animation: floatOrb1 11s ease-in-out infinite;
+}
+.bg-orb--8 {
+  width: 350px;
+  height: 350px;
+  background: #FF3CAC;
+  bottom: 5%;
+  left: 5%;
+  animation: floatOrb2 14s ease-in-out infinite;
+}
+
+/* Projects section orbs */
+.bg-orb--9 {
+  width: 450px;
+  height: 450px;
+  background: var(--accent);
+  top: 5%;
+  left: -10%;
+  animation: floatOrb2 12s ease-in-out infinite;
+}
+.bg-orb--10 {
+  width: 400px;
+  height: 400px;
+  background: #F97316;
+  bottom: -10%;
+  right: 5%;
+  animation: floatOrb1 15s ease-in-out infinite;
+}
+
+/* Contact section orbs */
+.bg-orb--11 {
+  width: 500px;
+  height: 500px;
+  background: var(--accent-alt);
+  top: 10%;
+  right: -5%;
+  animation: floatOrb1 13s ease-in-out infinite;
+}
+.bg-orb--12 {
+  width: 400px;
+  height: 400px;
+  background: var(--accent);
+  bottom: 10%;
+  left: -5%;
+  animation: floatOrb2 16s ease-in-out infinite;
+}
+
+@keyframes floatOrb1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(30px, -20px) scale(1.05); }
+  50% { transform: translate(-15px, 25px) scale(0.95); }
+  75% { transform: translate(20px, 15px) scale(1.03); }
+}
+
+@keyframes floatOrb2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-25px, 15px) scale(1.08); }
+  66% { transform: translate(20px, -20px) scale(0.93); }
+}
+
+@media (max-width: 768px) {
+  .bg-orb {
+    filter: blur(80px);
+    opacity: 0.04;
+  }
+  .bg-orb--1, .bg-orb--3, .bg-orb--5, .bg-orb--7, .bg-orb--9, .bg-orb--11 {
+    width: 300px;
+    height: 300px;
+  }
+  .bg-orb--2, .bg-orb--4, .bg-orb--6, .bg-orb--8, .bg-orb--10, .bg-orb--12 {
+    width: 250px;
+    height: 250px;
+  }
 }

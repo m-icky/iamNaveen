@@ -2,9 +2,16 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import useSound from '../../hooks/useSound'
 
-const links = ['About', 'Skills', 'Projects', 'Experience', 'Contact']
+const links = [
+  { name: 'Home',       id: 'home' },
+  { name: 'About',      id: 'about' },
+  { name: 'Skills',     id: 'skills' },
+  { name: 'Projects',   id: 'projects' },
+  { name: 'Experience', id: 'experience' },
+  { name: 'Contact',    id: 'contact' },
+]
 
-export default function Nav({ toggleTerminal }) {
+export default function Nav({ toggleTerminal, scrollToSection }) {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   const { playClick, playHover } = useSound()
@@ -15,10 +22,15 @@ export default function Nav({ toggleTerminal }) {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  const scrollTo = (id) => {
+  const handleNav = (id) => {
     playClick()
-    const el = document.getElementById(id.toLowerCase())
-    if (el) el.scrollIntoView({ behavior: 'smooth' })
+    if (scrollToSection) {
+      scrollToSection(id)
+    } else {
+      // Fallback
+      const el = document.getElementById(id)
+      if (el) el.scrollIntoView({ behavior: 'smooth' })
+    }
     setOpen(false)
   }
 
@@ -36,19 +48,23 @@ export default function Nav({ toggleTerminal }) {
           transition: 'all 0.4s ease',
         }}
       >
-        <div className="font-display text-2xl tracking-wider text-accent">Naveen</div>
+        <div className="font-display text-2xl tracking-wider text-accent"
+        onClick={() => handleNav('home')}
+        onMouseEnter={playHover}
+        style={{ cursor: 'pointer' }}
+        >Naveen TM</div>
 
         {/* Desktop */}
         <div className="hidden md:flex items-center gap-8">
           {links.map((link) => (
             <button
-              key={link}
-              onClick={() => scrollTo(link)}
+              key={link.name}
+              onClick={() => handleNav(link.id)}
               onMouseEnter={playHover}
               className="font-mono text-xs tracking-widest uppercase magnetic-btn opacity-70 hover:opacity-100 transition-opacity"
-              style={{ color: 'var(--fg)' }}
+              style={{ color: 'var(--fg)', background: 'none', border: 'none', cursor: 'pointer' }}
             >
-              {link}
+              {link.name}
             </button>
           ))}
           <a
@@ -67,6 +83,7 @@ export default function Nav({ toggleTerminal }) {
             }}
             onMouseEnter={playHover}
             className="font-mono text-[10px] opacity-30 mt-1 uppercase tracking-tighter hover:opacity-100 transition-opacity cursor-pointer"
+            style={{ background: 'none', border: 'none' }}
           >
             Terminal: Ctrl + G
           </button>
@@ -79,6 +96,7 @@ export default function Nav({ toggleTerminal }) {
             playClick()
             setOpen(!open)
           }}
+          style={{ background: 'none', border: 'none' }}
         >
           <span className="block w-6 h-px" style={{ background: 'var(--fg)', transition: 'all 0.3s', transform: open ? 'translateY(6px) rotate(45deg)' : '' }} />
           <span className="block w-6 h-px" style={{ background: 'var(--fg)', opacity: open ? 0 : 1, transition: 'all 0.3s' }} />
@@ -97,14 +115,15 @@ export default function Nav({ toggleTerminal }) {
           >
             {links.map((link, i) => (
               <motion.button
-                key={link}
+                key={link.name}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.07 }}
-                onClick={() => scrollTo(link)}
+                onClick={() => handleNav(link.id)}
                 className="font-display text-6xl text-accent"
+                style={{ background: 'none', border: 'none', cursor: 'pointer' }}
               >
-                {link}
+                {link.name}
               </motion.button>
             ))}
             <motion.button 
@@ -117,6 +136,7 @@ export default function Nav({ toggleTerminal }) {
                 setOpen(false)
               }}
               className="mt-8 font-mono text-xs uppercase tracking-[0.3em] cursor-pointer"
+              style={{ background: 'none', border: 'none' }}
             >
               Ctrl + G — Terminal
             </motion.button>

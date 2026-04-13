@@ -1,10 +1,9 @@
 import { useRef, useState } from 'react'
 import { motion } from 'framer-motion'
-import SnakeGame from '../SnakeGame/SnakeGame'
 
 const projects = [
   {
-    title: 'Google Docs Editor',
+    title: 'RVRite Editor',
     subtitle: 'Collaborative Document Editor',
     description: 'A full-featured word document editor with real-time collaboration, tracked edits, version history, rich text formatting, and structured XML conversion. Led complete frontend engineering.',
     tech: ['React.js', 'TipTap', 'ProseMirror', 'Laravel', 'MySQL'],
@@ -24,20 +23,50 @@ const projects = [
     type: 'Independent',
   },
   {
-    title: 'IOS Calculator',
-    subtitle: 'Containerized React App',
-    description: 'Responsive iOS-style calculator using React and Vite with clean UI components and efficient state management. Containerized with Docker for seamless deployment.',
-    tech: ['React', 'Vite', 'CSS3', 'Docker'],
-    color: '#00FFCC',
+    title: 'Sarkeetofficial Stranger\'s Camp',
+    subtitle: 'E-commerce Website',
+    description: 'A visually immersive landing page for Stranger\'s Camp by sarkeet.official — a community-driven travel experience that brings strangers together on unforgettable trips.',
+    tech: ['React', 'Vite', 'CSS3', 'TailwindCSS', 'Three.js'],
+    color: '#00e5ffff',
     bg: 'linear-gradient(135deg, #001a15, #002a22)',
-    emoji: '🧮',
+    emoji: '🏕️',
+    type: 'Professional',
+  },
+  {
+    title: 'Indo-Shah Aluminium & Interiors',
+    subtitle: 'Aluminium & Interiors Website',
+    description: 'Delivering a premium digital experience that reflects the brand’s luxury positioning. Built using React (Vite) for high performance, styled with Tailwind CSS for a clean and scalable UI, and enhanced with Framer Motion to create smooth, engaging animations.',
+    tech: ['React', 'Vite', 'CSS3', 'TailwindCSS', 'Three.js'],
+    color: '#59ff00ff',
+    bg: 'linear-gradient(135deg, #051a00ff, #002a0aff)',
+    emoji: '🏠',
+    type: 'Professional',
+  },
+  {
+    title: 'Absolute Ayurveda',
+    subtitle: 'Ayurveda Website',
+    description: 'Developed a luxury wellness website, Absolute Ayurveda, using Next.js 14, Tailwind CSS, and Framer Motion, focusing on performance, SEO, and refined user experience.',
+    tech: ['HTML5', 'CSS3', 'JavaScript', 'Next.js', 'Tailwind CSS', 'Framer Motion'],
+    color: '#ed3aeaff',
+    bg: 'linear-gradient(135deg, #20001fff, #2d002fff)',
+    emoji: '🧘',
+    type: 'Professional',
+  },
+   {
+    title: 'Orderly',
+    subtitle: 'QR-Based Food Order Web Application',
+    description: 'A modern, responsive web application that streamlines the food ordering process for restaurants and cafes. Users can scan a QR code to view the menu, place orders, and make payments seamlessly.',
+    tech: ['HTML5', 'CSS3', 'JavaScript', 'React', 'Vite', 'Tailwind CSS', 'Node.js', 'Express.js', 'MongoDB'],
+    color: '#ed9f3aff',
+    bg: 'linear-gradient(135deg, #201000ff, #2f1500ff)',
+    emoji: '🍔',
     type: 'Independent',
   },
   {
     title: 'Strong Password Checker',
     subtitle: 'Security Tool',
     description: 'Real-time password strength evaluation based on length, character composition, and entropy rules. Visual feedback indicators and clean, lightweight frontend.',
-    tech: ['React', 'Vite', 'CSS3'],
+    tech: ['HTML5', 'CSS3', 'JavaScript', 'React', 'Vite'],
     color: '#7C3AED',
     bg: 'linear-gradient(135deg, #0d0020, #14002f)',
     emoji: '🔐',
@@ -47,21 +76,11 @@ const projects = [
     title: 'Tic-Tac-Toe',
     subtitle: 'Interactive Game',
     description: 'Lightweight, responsive Tic-Tac-Toe game featuring two-player local gameplay, win/draw detection, and a clean UI with modern React components. Deployed on GitHub Pages.',
-    tech: ['React', 'Vite', 'CSS3', 'React Bits'],
+    tech: ['HTML5', 'CSS3', 'JavaScript', 'React', 'Vite', 'CSS3', 'React Bits'],
     color: '#F97316',
     bg: 'linear-gradient(135deg, #1a0a00, #2a1200)',
     emoji: '🎮',
     type: 'Independent',
-  },
-  {
-    title: 'Medical Inventory',
-    subtitle: 'Pharmacy Management System',
-    description: 'Web-based booking and inventory management for a medical shop with stock threshold alerts, admin user management, and order processing.',
-    tech: ['HTML5', 'CSS3', 'PHP', 'MySQL'],
-    color: '#06B6D4',
-    bg: 'linear-gradient(135deg, #00111a, #001c2a)',
-    emoji: '💊',
-    type: 'Professional',
   },
 ]
 
@@ -176,19 +195,16 @@ function ProjectCard({ project, index }) {
   )
 }
 
-export default function Projects() {
-  const scrollRef = useRef(null)
-  const snakeRef = useRef(null)
-
-  const handleDirection = (dir) => {
-    if (snakeRef.current) {
-      snakeRef.current.changeDirection(dir)
-    }
-  }
-
+export default function SelectedWorks() {
   return (
     <section id="projects" className="section-pad relative" style={{ background: 'var(--bg)' }}>
-      <div className="max-w-7xl mx-auto px-8">
+      {/* Animated background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="bg-orb bg-orb--9" />
+        <div className="bg-orb bg-orb--10" />
+      </div>
+
+      <div className="relative z-10 mx-auto px-8" style={{maxWidth: '100vw' }}>
         {/* Section label */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -238,7 +254,6 @@ export default function Projects() {
 
         {/* Horizontal scroll */}
         <div
-          ref={scrollRef}
           className="horizontal-scroll pb-6"
           style={{ paddingLeft: 0, paddingRight: 40 }}
         >
@@ -264,56 +279,6 @@ export default function Projects() {
             →
           </motion.div>
         </motion.div>
-      </div>
-
-      <div className="relative mt-8 pt-8 border-t" style={{ borderColor: 'var(--border)' }}>
-        {/* Game Header outside the canvas area */}
-        <div className="flex justify-between items-start mb-6 px-8 max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row items-center justify-between w-full mb-10 gap-4">
-            <h1 className="font-display leading-none" style={{ fontSize: 'clamp(52px, 8vw, 88px)', color: 'var(--fg)' }}>
-              Have <span className="gradient-text">Fun</span>
-            </h1>
-          </div>
-          
-          <div className="flex flex-col items-center gap-2" style={{ color: 'var(--muted)' }}>
-            <p className="font-mono text-xs tracking-widest uppercase mb-2">Controls</p>
-            <div className="flex gap-2 mb-1">
-              <div className="w-8 h-8 invisible" />
-              <button
-                type="button"
-                onClick={() => handleDirection('up')}
-                className="w-8 h-8 rounded border border-white/20 flex items-center justify-center font-mono text-sm hover:bg-white/10 active:bg-white/20 transition-colors cursor-pointer select-none"
-                aria-label="Move up"
-              >W</button>
-              <div className="w-8 h-8 invisible" />
-            </div>
-            <div className="flex gap-2">
-              <button
-                type="button"
-                onClick={() => handleDirection('left')}
-                className="w-8 h-8 rounded border border-white/20 flex items-center justify-center font-mono text-sm hover:bg-white/10 active:bg-white/20 transition-colors cursor-pointer select-none"
-                aria-label="Move left"
-              >A</button>
-              <button
-                type="button"
-                onClick={() => handleDirection('down')}
-                className="w-8 h-8 rounded border border-white/20 flex items-center justify-center font-mono text-sm hover:bg-white/10 active:bg-white/20 transition-colors cursor-pointer select-none"
-                aria-label="Move down"
-              >S</button>
-              <button
-                type="button"
-                onClick={() => handleDirection('right')}
-                className="w-8 h-8 rounded border border-white/20 flex items-center justify-center font-mono text-sm hover:bg-white/10 active:bg-white/20 transition-colors cursor-pointer select-none"
-                aria-label="Move right"
-              >D</button>
-            </div>
-          </div>
-        </div>
-
-        {/* Embedded Snake Game section */}
-        <div className="max-w-7xl mx-auto px-8" style={{ height: '50vh' }}>
-          <SnakeGame ref={snakeRef} />
-        </div>
       </div>
     </section>
   )

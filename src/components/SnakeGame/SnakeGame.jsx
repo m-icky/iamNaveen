@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback } from 'react'
+import { useEffect, useRef, useCallback, forwardRef, useImperativeHandle } from 'react'
 
 const GRID = 16          // cell size in px
 const TICK_MS = 110      // snake speed (ms per move)
@@ -34,7 +34,7 @@ function getSnakeColor(index, total) {
   return lerpColor(SNAKE_COLORS[lo], SNAKE_COLORS[hi], scaled - lo)
 }
 
-export default function SnakeGame() {
+const SnakeGame = forwardRef(function SnakeGame(props, ref) {
   const canvasRef = useRef(null)
   const stateRef = useRef(null)
   const animRef = useRef(null)
@@ -67,6 +67,20 @@ export default function SnakeGame() {
 
     return { cols, rows, body, dir: { x: 1, y: 0 }, nextDir: { x: 1, y: 0 }, particles }
   }, [])
+
+  // Expose changeDirection so parent control buttons can steer the snake
+  useImperativeHandle(ref, () => ({
+    changeDirection(direction) {
+      const s = stateRef.current
+      if (!s) return
+      switch (direction) {
+        case 'up':    if (s.dir.y !== 1)  s.nextDir = { x: 0, y: -1 }; break
+        case 'down':  if (s.dir.y !== -1) s.nextDir = { x: 0, y: 1 };  break
+        case 'left':  if (s.dir.x !== 1)  s.nextDir = { x: -1, y: 0 }; break
+        case 'right': if (s.dir.x !== -1) s.nextDir = { x: 1, y: 0 };  break
+      }
+    }
+  }), [])
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -294,3 +308,6 @@ export default function SnakeGame() {
     </div>
   )
 }
+)
+
+export default SnakeGame

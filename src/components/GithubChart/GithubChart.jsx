@@ -4,14 +4,20 @@ import { motion } from 'framer-motion'
 
 export default function GithubChart() {
   return (
-    <section className=" relative" style={{ background: 'var(--bg)' }}>
-      <div className="max-w-7xl mx-auto px-8">
+    <section className="relative w-full" style={{ background: 'var(--bg)' }}>
+      {/* Animated background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="bg-orb bg-orb--3" />
+        <div className="bg-orb bg-orb--4" />
+      </div>
+
+      <div className="relative z-10 max-w-7xl mx-auto px-8 py-16 flex flex-col items-center justify-center" style={{ minHeight: '100%' }}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="flex flex-col items-center justify-center p-8 md:p-12 rounded-3xl overflow-hidden"
+          className="flex flex-col items-center justify-center p-8 md:p-12 rounded-3xl overflow-hidden w-full"
           style={{
             background: 'linear-gradient(135deg, rgba(255,255,255,0.01), rgba(255,255,255,0.03))',
             border: '1px solid var(--border)',
