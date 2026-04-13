@@ -92,7 +92,7 @@ export default function Contact() {
               {[
                 { label: 'Email', value: 'naveentmadhu@gmail.com', href: 'mailto:naveentmadhu@gmail.com' },
                 { label: 'Phone', value: '+91 7902765146', href: 'tel:+917902765146' },
-                { label: 'Location', value: 'Thiruvananthapuram, Kerala' },
+                { label: 'Location', value: 'Ernakulam, Kerala' },
               ].map(item => (
                 <div key={item.label} className="flex gap-4">
                   <span className="font-mono text-xs w-16 pt-0.5" style={{ color: 'var(--accent)' }}>{item.label}</span>

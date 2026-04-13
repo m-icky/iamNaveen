@@ -3,8 +3,8 @@ import LetterGlitch from '../ReactBits/LetterGlitch'
 import LogoLoop from '../ReactBits/LogoLoop'
 
 const socials = [
-  { label: 'GitHub',   icon: '⌥', href: 'https://github.com/naveen-tm' },
-  { label: 'LinkedIn', icon: 'in', href: 'https://linkedin.com/in/naveen-tm-0149a1229/' },
+  { label: 'GitHub',   icon: '⌥', href: 'https://github.com/m-icky' },
+  { label: 'LinkedIn', icon: 'in', href: 'https://www.linkedin.com/in/naveen-tm-0149a1229/' },
   { label: 'Email',    icon: '@',  href: 'mailto:naveentmadhu@gmail.com' },
 ]
 

@@ -26,33 +26,89 @@ export default function TerminalModal({ isOpen, onClose }) {
   }, [history])
 
   const handleCommand = (e) => {
+    const cmd = input.trim().toLowerCase()
+
+    // 👉 TAB AUTOCOMPLETE
+    if (e.key === 'Tab') {
+      e.preventDefault() // stop browser focus change
+
+      if (suggestions.length === 1) {
+        setInput(suggestions[0])
+      }
+
+      return
+    }
+
+    // 👉 ENTER EXECUTION
     if (e.key === 'Enter') {
-      const cmd = input.trim().toLowerCase()
       setHistory((prev) => [...prev, { type: 'input', text: `> ${input}` }])
-      
       playClick()
 
-      // Response logic
       setTimeout(() => {
         let response = []
+
+        const commandsMap = {
+          stack: 'STACK: React, HTML, CSS, JS, Next.js, GSAP, Three.js, Tailwind',
+          specialty: 'SPECIALTY: Interactive UI, Animations, Performance Optimization',
+          experience: 'EXPERIENCE: Building scalable frontend architectures & design systems',
+          projects: 'PROJECTS: Immersive web apps, 3D experiences, brand-driven UI',
+          tools: 'TOOLS: Figma, Git, Framer Motion, WebGL, TypeScript, Node.js, Python, Django, MySQL',
+          approach: 'APPROACH: Pixel-perfect, motion-first, user-centric design',
+          focus: 'CURRENT FOCUS: Advanced animations, 3D web, and UI micro-interactions',
+          location: 'LOCATION: Ernakulam, Kerala, India',
+          passion: 'PASSION: Building cinematic web experiences.',
+          status: 'STATUS: Available for freelance & collaborations',
+          contact: 'CONTACT: naveentmadhu@gmail.com'
+        }
+
         if (cmd.includes('clear')) {
           setHistory([])
+          return
+        }
+
+        const matchedKey = Object.keys(commandsMap).find(key =>
+          cmd.includes(key)
+        )
+
+        if (matchedKey) {
+          response = [
+            { type: 'output', text: `> ${matchedKey.toUpperCase()}` },
+            { type: 'output', text: commandsMap[matchedKey] }
+          ]
         } else {
           response = [
-            { type: 'output', text: '--- PROFILE: NAVEEN T M ---' },
-            { type: 'output', text: 'ROLE: Creative Frontend Engineer' },
-            { type: 'output', text: 'STACK: React, GSAP, Three.js, Tailwind' },
-            { type: 'output', text: 'LOCATION: India' },
-            { type: 'output', text: 'PASSION: Building cinematic web experiences.' },
-            { type: 'output', text: '---------------------------' },
+            { type: 'output', text: '👋 Hey, I’m Naveen — Creative Frontend Engineer' },
+            { type: 'output', text: 'Type a keyword to explore:' },
+            { type: 'output', text: '→ stack | specialty | experience | projects' },
+            { type: 'output', text: '→ tools | approach | focus | location' },
+            { type: 'output', text: '→ passion | status | contact' },
           ]
-          setHistory((prev) => [...prev, ...response])
         }
+
+        setHistory((prev) => [...prev, ...response])
       }, 100)
 
       setInput('')
     }
   }
+
+    const commands = [
+    'stack',
+    'specialty',
+    'experience',
+    'projects',
+    'tools',
+    'approach',
+    'focus',
+    'location',
+    'passion',
+    'status',
+    'contact'
+  ]
+
+  const suggestions = commands.filter(cmd =>
+    cmd.startsWith(input.toLowerCase())
+  )
 
   return (
     <AnimatePresence>
@@ -120,6 +176,11 @@ export default function TerminalModal({ isOpen, onClose }) {
                   autoFocus
                 />
               </div>
+              {input && suggestions.length > 0 && (
+                <div className="text-white/40 text-xs mt-2">
+                  Suggestions: {suggestions.join(', ')}
+                </div>
+              )}
             </div>
           </motion.div>
         </motion.div>

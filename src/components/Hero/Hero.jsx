@@ -165,7 +165,7 @@ export default function Hero() {
                   Frontend Engineer
                 </p>
                 <p className="font-mono text-xs mt-1" style={{ color: 'var(--muted)' }}>
-                  React · Three.js · GSAP · Framer
+                  React · HTML 5 · CSS 3 · Tailwind CSS · Three.js · GSAP · Framer
                 </p>
               </div>
             </motion.div>

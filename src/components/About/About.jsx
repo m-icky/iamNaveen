@@ -1,5 +1,6 @@
 import { useRef, Suspense, lazy } from 'react'
 import { motion, useInView } from 'framer-motion'
+import Resume from '../../Naveen T M CV.pdf'
 
 const AboutThreeScene = lazy(() => import('../ThreeScene/ThreeScene').then(m => ({ default: m.AboutThreeScene })))
 
@@ -94,15 +95,16 @@ export default function About() {
 
               <motion.div variants={lineVariants} className="flex items-center gap-4">
                 <a
-                  href="/Naveen_T_M_CV__1_.pdf"
-                  download
+                  href={Resume}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="glass px-6 py-3 rounded-full font-mono text-sm tracking-wider uppercase"
                   style={{ color: 'var(--accent)', border: '1px solid var(--accent)' }}
                 >
-                  Download CV
+                  View CV
                 </a>
                 <div className="flex gap-3">
-                  {['Thiruvananthapuram', 'Kerala'].map(tag => (
+                  {['Ernakulam', 'Kerala'].map(tag => (
                     <span key={tag} className="glass px-3 py-1.5 rounded-full font-mono text-xs" style={{ color: 'var(--muted)' }}>
                       {tag}
                     </span>
@@ -154,7 +156,7 @@ export default function About() {
               className="absolute -top-6 -right-6 glass rounded-2xl p-4"
               style={{ border: '1px solid var(--border)' }}
             >
-              <div className="font-display text-3xl" style={{ color: 'var(--accent)' }}>10+</div>
+              <div className="font-display text-3xl" style={{ color: 'var(--accent)' }}>25+</div>
               <div className="font-mono text-xs" style={{ color: 'var(--muted)' }}>Projects</div>
             </motion.div>
           </motion.div>
