@@ -1,8 +1,8 @@
-import { useRef, Suspense, lazy } from 'react'
+import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import Resume from '../../Naveen T M CV.pdf'
 
-const AboutThreeScene = lazy(() => import('../ThreeScene/ThreeScene').then(m => ({ default: m.AboutThreeScene })))
+import AboutSkillsAnimation from './AboutSkillsAnimation'
 
 export default function About() {
   const ref = useRef(null)
@@ -118,31 +118,24 @@ export default function About() {
             </motion.div>
           </div>
 
-          {/* Right: 3D Scene */}
+          {/* Right: Modern Skills Animation */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 1.2, ease: [0.23, 1, 0.32, 1] }}
+            transition={{ duration: 1, ease: [0.23, 1, 0.32, 1] }}
             className="relative"
-            style={{ height: 'clamp(280px, 40vh, 400px)' }}
+            style={{ height: 'clamp(380px, 48vh, 470px)' }}
           >
             {/* Glow backdrop */}
             <div
-              className="absolute inset-0 rounded-3xl"
+              className="absolute -inset-2 rounded-3xl pointer-events-none opacity-60"
               style={{
-                background: 'radial-gradient(ellipse 60% 60% at 50% 50%, rgba(232,255,0,0.08) 0%, transparent 70%)',
+                background: 'radial-gradient(ellipse 60% 60% at 50% 50%, rgba(232,255,0,0.12) 0%, transparent 70%)',
               }}
             />
-            <div className="glass rounded-3xl w-full h-full overflow-hidden" style={{ border: '1px solid var(--border)' }}>
-              <Suspense fallback={
-                <div className="w-full h-full flex items-center justify-center">
-                  <div style={{ width: 40, height: 40, border: '2px solid var(--accent)', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />
-                </div>
-              }>
-                <AboutThreeScene />
-              </Suspense>
-            </div>
+
+            <AboutSkillsAnimation />
 
             {/* Floating stats */}
             <motion.div
