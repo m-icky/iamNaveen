@@ -5,6 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Lanyard from '../ReactBits/Lanyard'
 import CircularText from '../ReactBits/CircularText'
 import TextType from '../ReactBits/TextType'
+import useSound from '../../hooks/useSound'
 
 const HeroThreeScene = lazy(() => import('../ThreeScene/ThreeScene').then(m => ({ default: m.default })))
 
@@ -12,26 +13,27 @@ gsap.registerPlugin(ScrollTrigger)
 
 const container = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.12, delayChildren: 0.3 } },
+  show: { transition: { staggerChildren: 0.1, delayChildren: 0.2 } },
 }
 
 const item = {
-  hidden: { y: 80, opacity: 0 },
-  show: { y: 0, opacity: 1, transition: { duration: 1, ease: [0.23, 1, 0.32, 1] } },
+  hidden: { y: 60, opacity: 0 },
+  show: { y: 0, opacity: 1, transition: { duration: 0.9, ease: [0.23, 1, 0.32, 1] } },
 }
 
-function MagneticBtn({ children, href, onClick, className = '' }) {
+function MagneticBtn({ children, href, onClick, className = '', ...props }) {
   const btnRef = useRef(null)
+  const { playHover } = useSound()
 
   const handleMouseMove = (e) => {
     const rect = btnRef.current.getBoundingClientRect()
     const x = e.clientX - rect.left - rect.width / 2
     const y = e.clientY - rect.top - rect.height / 2
-    gsap.to(btnRef.current, { x: x * 0.35, y: y * 0.35, duration: 0.4, ease: 'power2.out' })
+    gsap.to(btnRef.current, { x: x * 0.3, y: y * 0.3, duration: 0.35, ease: 'power2.out' })
   }
 
   const handleMouseLeave = () => {
-    gsap.to(btnRef.current, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1,0.4)' })
+    gsap.to(btnRef.current, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.4)' })
   }
 
   const Tag = href ? 'a' : 'button'
@@ -43,7 +45,9 @@ function MagneticBtn({ children, href, onClick, className = '' }) {
       onClick={onClick}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
+      onMouseEnter={playHover}
       className={`magnetic-btn ${className}`}
+      {...props}
     >
       {children}
     </Tag>
@@ -52,9 +56,10 @@ function MagneticBtn({ children, href, onClick, className = '' }) {
 
 export { MagneticBtn }
 
-export default function Hero() {
+export default function Hero({ scrollToSection }) {
   const heroRef = useRef(null)
   const videoRef = useRef(null)
+  const { playClick } = useSound()
 
   useEffect(() => {
     const video = videoRef.current
@@ -64,11 +69,10 @@ export default function Hero() {
     const st = ScrollTrigger.create({
       trigger: heroRef.current,
       start: 'top top',
-      end: 'bottom+=2000 top',
-      scrub: 1,
+      end: 'bottom top',
       onUpdate: (self) => {
-        if (video.duration && isFinite(video.duration)) {
-          video.currentTime = video.duration * self.progress
+        if (video.duration) {
+          video.currentTime = self.progress * video.duration
         }
       },
     })
@@ -76,174 +80,206 @@ export default function Hero() {
   }, [])
 
   const scrollToAbout = () => {
-    document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })
+    playClick()
+    if (scrollToSection) {
+      scrollToSection('about')
+    } else {
+      document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })
+    }
   }
 
   return (
     <section
       ref={heroRef}
-      className="relative w-full min-h-screen flex items-center justify-center overflow-hidden"
-      style={{ background: 'var(--bg)' }}
       id="home"
+      className="relative w-full min-h-screen flex items-center justify-center overflow-hidden pt-28 pb-20"
+      style={{ background: 'var(--bg)' }}
     >
-      {/* Scroll-controlled video */}
+      {/* Scroll-controlled video backdrop */}
       <video
         ref={videoRef}
-        className="absolute inset-0 w-full h-full object-cover opacity-20"
-        muted playsInline preload="auto"
-        style={{ willChange: 'auto' }}
+        className="absolute inset-0 w-full h-full object-cover opacity-15 pointer-events-none"
+        muted
+        playsInline
+        preload="auto"
       >
         <source src="/hero.webm" type="video/webm" />
         <source src="/hero.mp4" type="video/mp4" />
       </video>
 
-      {/* Gradient overlay */}
+      {/* Atmospheric Vignette & Radial Light */}
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 80% 60% at 50% 40%, transparent 30%, var(--bg) 100%)' }}
+        style={{
+          background:
+            'radial-gradient(ellipse 70% 50% at 50% 35%, rgba(232,255,0,0.06) 0%, transparent 70%), radial-gradient(ellipse 100% 80% at 50% 50%, transparent 40%, var(--bg) 100%)',
+        }}
       />
 
-      {/* Three.js */}
-      <div className="absolute inset-0 pointer-events-none">
+      {/* 3D WebGL Canvas Backdrop */}
+      <div className="absolute inset-0 pointer-events-none z-0">
         <Suspense fallback={null}>
           <HeroThreeScene />
         </Suspense>
       </div>
 
-      {/* Main layout */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 flex flex-col lg:flex-row items-center justify-between gap-12 pt-24 pb-32">
-
-        {/* Left: Text content */}
-        <div className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left">
-          <motion.div variants={container} initial="hidden" animate="show">
-            {/* Badge */}
-            <motion.div variants={item} className="mb-8 inline-flex items-center gap-2">
-              <span
-                className="glass rounded-full px-4 py-2 font-mono text-xs tracking-widest uppercase"
-                style={{ color: 'var(--accent)', border: '1px solid var(--accent)' }}
-              >
-                Available for work
+      {/* Hero Layout Container */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-10 flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-8">
+        {/* Left Column: Editorial Typographic Narrative */}
+        <div className="flex-1 w-full flex flex-col items-center lg:items-start text-center lg:text-left">
+          <motion.div variants={container} initial="hidden" animate="show" className="w-full">
+            {/* Top Status & Year Index */}
+            <motion.div variants={item} className="mb-6 flex flex-wrap items-center justify-center lg:justify-start gap-3">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass border border-accent/30 shadow-[0_0_20px_rgba(232,255,0,0.15)]">
+                <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+                <span className="font-mono text-[11px] tracking-widest uppercase font-semibold text-accent">
+                  Available for Commissions 2026
+                </span>
+              </div>
+              <span className="hidden sm:inline-block font-mono text-[11px] tracking-widest text-white/40 uppercase">
+                // CREATIVE FRONTEND ENGINEER
               </span>
             </motion.div>
 
-            {/* Headlines */}
-            <motion.h1
-              variants={item}
-              className="font-display leading-none mb-4 select-none gradient-text"
-              style={{ fontSize: 'clamp(64px, 11vw, 150px)', letterSpacing: '-0.02em' }}
-            >
-              Naveen T M
-            </motion.h1>
+            {/* Massive Oversized Headline */}
+            <motion.div variants={item} className="mb-6">
+              <h1
+                className="font-display font-extrabold tracking-tighter leading-[0.88] select-none text-white"
+                style={{
+                  fontSize: 'clamp(54px, 10vw, 136px)',
+                  letterSpacing: '-0.03em',
+                }}
+              >
+                NAVEEN <br className="hidden sm:inline" />
+                <span className="gradient-text font-black">T M</span>
+              </h1>
+            </motion.div>
 
-            {/* CircularText badge row */}
+            {/* CircularText Badge & Specialization Metadata */}
             <motion.div
               variants={item}
-              className="flex items-center gap-5 mb-6 justify-center lg:justify-start"
+              className="flex flex-col sm:flex-row items-center gap-6 mb-8 justify-center lg:justify-start"
             >
-              <CircularText
-                text="Creative Frontend Engineer • "
-                radius={50}
-                fontSize={9}
-                duration={14}
-                color="var(--accent)"
-              >
-                <div style={{
-                  width: 32, height: 32, borderRadius: '50%',
-                  background: 'var(--accent)',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontSize: 16,
-                }}>
-                  ⚛
-                </div>
-              </CircularText>
-
-              <div>
-                <p
-                  className="font-mono text-sm tracking-widest uppercase"
-                  style={{ color: 'var(--accent)', letterSpacing: '0.18em' }}
+              <div className="shrink-0">
+                <CircularText
+                  text="CREATIVE FRONTEND • THREE.JS • "
+                  radius={48}
+                  fontSize={8.5}
+                  duration={16}
+                  color="var(--accent)"
                 >
-                  Frontend Engineer
+                  <div
+                    style={{
+                      width: 34,
+                      height: 34,
+                      borderRadius: '50%',
+                      background: 'linear-gradient(135deg, var(--accent), #b4c600)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: '#0A0A0A',
+                      fontWeight: 800,
+                      fontSize: 16,
+                      boxShadow: '0 0 20px rgba(232,255,0,0.5)',
+                    }}
+                  >
+                    ⚛
+                  </div>
+                </CircularText>
+              </div>
+
+              <div className="flex flex-col text-center sm:text-left">
+                <p className="font-mono text-xs uppercase tracking-[0.2em] text-accent font-semibold">
+                  Frontend Architecture & Motion Systems
                 </p>
-                <p className="font-mono text-xs mt-1" style={{ color: 'var(--muted)' }}>
-                  React · HTML 5 · CSS 3 · Tailwind CSS · Three.js · GSAP · Framer
+                <p className="font-mono text-xs mt-1 text-white/60 tracking-wider">
+                  React 18 · ProseMirror · TipTap · Three.js · Tailwind · GSAP
+                </p>
+                <p className="font-mono text-[10px] mt-1 text-white/35">
+                  Currently at RSGP Consulting • Based in Kerala, India
                 </p>
               </div>
             </motion.div>
 
-            {/* Description */}
-            <motion.div
-              variants={item}
-              className="max-w-md mb-10"
-            >
+            {/* Subtext description with dynamic TextType */}
+            <motion.div variants={item} className="max-w-xl mb-10 text-center lg:text-left">
               <TextType
-                text="Building interactive web experiences using React, Tailwind CSS and modern animation systems."
+                text="Architecting Google Docs–style collaborative editors, WebGL 3D physics interfaces, and award-winning digital experiences."
                 as="p"
-                className="leading-relaxed"
-                style={{ color: 'var(--muted)', fontSize: '1rem' }}
-                typingSpeed={30}
-                initialDelay={600}
+                className="font-body text-base sm:text-lg leading-relaxed text-white/70"
+                typingSpeed={26}
+                initialDelay={400}
                 showCursor={true}
                 loop={false}
               />
             </motion.div>
 
-            {/* CTAs */}
+            {/* Magnetic CTA Capsules */}
             <motion.div
               variants={item}
               className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start"
             >
               <MagneticBtn
                 onClick={scrollToAbout}
-                className="px-8 py-4 rounded-full font-mono text-sm tracking-wider uppercase"
-                style={{ background: 'var(--accent)', color: '#0A0A0A', fontWeight: 600 }}
+                className="px-8 py-4 rounded-full font-mono text-xs tracking-widest uppercase font-bold text-black group overflow-hidden relative shadow-[0_0_30px_rgba(232,255,0,0.3)] hover:shadow-[0_0_45px_rgba(232,255,0,0.5)] transition-shadow duration-300"
+                style={{ background: 'var(--accent)' }}
               >
-                View Work
+                <span className="relative z-10 flex items-center gap-2">
+                  Explore Journey
+                  <span className="transition-transform duration-300 group-hover:translate-y-0.5 group-hover:translate-x-0.5">↓</span>
+                </span>
               </MagneticBtn>
+
               <MagneticBtn
                 href="mailto:naveentmadhu@gmail.com"
-                className="px-8 py-4 rounded-full font-mono text-sm tracking-wider uppercase glass"
-                style={{ color: 'var(--fg)', border: '1px solid var(--border)' }}
+                className="px-8 py-4 rounded-full font-mono text-xs tracking-widest uppercase font-semibold text-white glass border border-white/15 hover:border-accent/60 transition-all duration-300 group"
               >
-                Get In Touch
+                <span className="flex items-center gap-2">
+                  Get In Touch
+                  <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+                </span>
               </MagneticBtn>
             </motion.div>
           </motion.div>
         </div>
 
-        {/* Right: Lanyard ID card — hidden on mobile */}
+        {/* Right Column: Hanging Interactive Lanyard ID Card */}
         <motion.div
-          initial={{ opacity: 0, x: 60, y: -20 }}
-          animate={{ opacity: 1, x: 0, y: 0 }}
-          transition={{ delay: 1.0, duration: 1.2, ease: [0.23, 1, 0.32, 1] }}
-          className="absolute top-5 right-0 lg:right-24 hidden md:flex flex-col items-center z-40"
+          initial={{ opacity: 0, y: -40, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ delay: 0.9, duration: 1.2, ease: [0.23, 1, 0.32, 1] }}
+          className="relative hidden md:flex flex-col items-center justify-center shrink-0 z-20 pt-4"
         >
-          {/* Wall clip/mount */}
-          <div style={{
-            width: 60, height: 14, borderRadius: 4,
-            background: 'linear-gradient(135deg, #888, #555)',
-            border: '1px solid rgba(255,255,255,0.2)',
-            boxShadow: '0 2px 8px rgba(0,0,0,0.5)',
-            marginBottom: -1,
-            zIndex: 2,
-            position: 'relative',
-          }} />
-          <Lanyard />
+          {/* Wall Bracket Accent */}
+          <div
+            className="w-16 h-3.5 rounded-sm mb-[-2px] z-30 relative shadow-[0_4px_12px_rgba(0,0,0,0.6)]"
+            style={{
+              background: 'linear-gradient(180deg, #999, #444)',
+              border: '1px solid rgba(255,255,255,0.25)',
+            }}
+          />
+          {/* Interactive Lanyard Badge */}
+          <div data-cursor-text="DRAG">
+            <Lanyard />
+          </div>
         </motion.div>
       </div>
 
-      {/* Scroll indicator */}
+      {/* Bottom Editorial Scroll Ticker Indicator */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 2.5 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-        style={{ color: 'var(--muted)' }}
+        transition={{ delay: 2.2, duration: 1 }}
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none z-10"
       >
-        <span className="font-mono text-xs tracking-widest uppercase">Scroll</span>
+        <span className="font-mono text-[10px] tracking-[0.25em] uppercase text-white/40">
+          SCROLL TO EXPLORE
+        </span>
         <motion.div
           animate={{ y: [0, 8, 0] }}
-          transition={{ repeat: Infinity, duration: 1.6, ease: 'easeInOut' }}
-          style={{ width: 1, height: 40, background: 'linear-gradient(to bottom, var(--accent), transparent)' }}
+          transition={{ repeat: Infinity, duration: 1.8, ease: 'easeInOut' }}
+          className="w-px h-10"
+          style={{ background: 'linear-gradient(to bottom, var(--accent), transparent)' }}
         />
       </motion.div>
     </section>

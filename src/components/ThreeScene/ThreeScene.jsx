@@ -84,13 +84,12 @@ export default function HeroThreeScene() {
     >
       <ambientLight intensity={0.3} />
       <pointLight position={[5, 5, 5]} intensity={1.5} color="#E8FF00" />
-      <pointLight position={[-5, -5, 3]} intensity={1} color="#3ccbffff" />
+      <pointLight position={[-5, -5, 3]} intensity={1} color="#3ccbff" />
       <FloatingOrb position={[3.5, -1, -2]} color="#FF3CAC" speed={1.1} distort={0.3} />
       <Particles />
-      <ambientLight intensity={0.3} />
-      <FloatingOrb position={[-5.5, 3.5, -1]} color="#c300ffff" speed={0.8} distort={0.4} />
+      <FloatingOrb position={[-5.5, 3.5, -1]} color="#c300ff" speed={0.8} distort={0.4} />
       <FloatingOrb position={[1.5, 2.5, -3]} color="#00FFCC" speed={0.6} distort={0.5} />
-      <FloatingOrb position={[7.5, 1.5, -8]} color="#ff0000ff" speed={0.6} distort={0.5} />
+      <FloatingOrb position={[7.5, 1.5, -8]} color="#ff3344" speed={0.6} distort={0.5} />
       <Particles />
     </Canvas>
   )

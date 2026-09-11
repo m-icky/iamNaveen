@@ -10,11 +10,11 @@ const experiences = [
     color: '#E8FF00',
     current: true,
     highlights: [
-      'Led complete frontend engineering of a Google Docs-style document editor',
-      'Built collaborative editing with real-time sync using ProseMirror & TipTap',
-      'Implemented tracked changes, version history, and structured XML export',
-      'Architected article management and rich text formatting systems',
-      'Tech: React.js, TipTap, ProseMirror, Laravel, MySQL',
+      'Spearheaded the complete frontend engineering of an enterprise Google Docs–style collaborative word processor',
+      'Engineered real-time collaborative editing pipelines using ProseMirror & TipTap v2 with step mapping',
+      'Implemented tracked changes, revision history, and structured roundtrip XML export systems',
+      'Architected article management and high-performance rich text formatting components',
+      'Stack: React.js, TipTap, ProseMirror, Laravel, MySQL, Tailwind CSS',
     ],
   },
   {
@@ -25,11 +25,10 @@ const experiences = [
     color: '#FF3CAC',
     current: false,
     highlights: [
-      'Developed Medical Retail & Inventory Management system',
-      'Built booking system with stock threshold alerts and admin controls',
-      'Created Construction Equipment Management platform',
-      'Customer verification system for equipment hire eligibility',
-      'Tech: HTML5/CSS3, PHP, Python/Django, MySQL',
+      'Developed responsive Medical Retail & Inventory Management platform with threshold alerts',
+      'Built automated customer verification system for construction equipment hire eligibility',
+      'Integrated RESTful APIs and real-time stock replenishment monitoring systems',
+      'Stack: HTML5/CSS3, JavaScript, PHP, Python/Django, MySQL',
     ],
   },
 ]
@@ -39,8 +38,8 @@ function TimelineItem({ exp, index, isLast }) {
   const inView = useInView(ref, { once: true, margin: '-40px' })
 
   return (
-    <div ref={ref} className="relative flex gap-5 md:gap-10">
-      {/* Timeline line */}
+    <div ref={ref} className="relative flex gap-5 md:gap-8 pb-10">
+      {/* Timeline Node & Connecting Vector */}
       <div className="flex flex-col items-center">
         <motion.div
           initial={{ scale: 0 }}
@@ -52,83 +51,89 @@ function TimelineItem({ exp, index, isLast }) {
             height: 16,
             borderRadius: '50%',
             background: exp.color,
-            boxShadow: `0 0 16px ${exp.color}80`,
+            boxShadow: `0 0 16px ${exp.color}90`,
             marginTop: 6,
           }}
         >
           {exp.current && (
             <motion.div
-              animate={{ scale: [1, 1.8, 1], opacity: [0.8, 0, 0.8] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              style={{
-                position: 'absolute',
-                inset: -3,
-                borderRadius: '50%',
-                border: `2px solid ${exp.color}`,
-              }}
+              animate={{ scale: [1, 2, 1], opacity: [0.8, 0, 0.8] }}
+              transition={{ duration: 2.2, repeat: Infinity }}
+              className="absolute -inset-1 rounded-full border-2"
+              style={{ borderColor: exp.color }}
             />
           )}
         </motion.div>
+
         {!isLast && (
           <motion.div
             initial={{ height: 0 }}
             animate={inView ? { height: '100%' } : { height: 0 }}
-            transition={{ duration: 1.2, delay: 0.3, ease: [0.23, 1, 0.32, 1] }}
+            transition={{ duration: 1.2, delay: 0.2, ease: [0.23, 1, 0.32, 1] }}
+            className="w-px flex-1 mt-3"
             style={{
-              width: 1,
-              flex: 1,
-              marginTop: 4,
-              background: `linear-gradient(to bottom, ${exp.color}40, transparent)`,
+              background: `linear-gradient(to bottom, ${exp.color}60, transparent)`,
             }}
           />
         )}
       </div>
 
-      {/* Content */}
+      {/* Content Card */}
       <motion.div
         initial={{ opacity: 0, x: 30 }}
         animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
         transition={{ duration: 0.8, delay: 0.2, ease: [0.23, 1, 0.32, 1] }}
-        className="pb-6 flex-1"
+        className="flex-1"
       >
-        <div className="glass rounded-2xl p-5" style={{ border: `1px solid ${exp.color}20` }}>
-          <div className="flex flex-col md:flex-row md:items-start justify-between gap-2 mb-3">
+        <div
+          className="glass rounded-3xl p-6 sm:p-8 transition-all duration-300 group hover:border-accent/40"
+          style={{
+            border: `1px solid ${exp.color}25`,
+            boxShadow: `0 10px 30px rgba(0,0,0,0.3)`,
+          }}
+        >
+          <div className="flex flex-col md:flex-row md:items-start justify-between gap-3 mb-4">
             <div>
-              <h3 className="font-display mb-0.5" style={{ fontSize: 'clamp(18px, 3vw, 28px)', color: exp.color, letterSpacing: '0.04em' }}>
+              <h3
+                className="font-display font-bold text-2xl sm:text-3xl tracking-tight mb-1 text-white"
+              >
                 {exp.role}
               </h3>
-              <p className="font-body text-sm" style={{ color: 'var(--fg)' }}>{exp.company}</p>
-              <p className="font-mono text-xs mt-0.5" style={{ color: 'var(--muted)' }}>{exp.location}</p>
+              <p className="font-body text-base font-medium text-white/90">{exp.company}</p>
+              <p className="font-mono text-xs text-white/40 mt-1">{exp.location}</p>
             </div>
-            <div className="flex flex-col items-start md:items-end gap-1">
+
+            <div className="flex flex-col items-start md:items-end gap-1.5 shrink-0">
               <span
-                className="font-mono text-xs px-3 py-1 rounded-full flex-shrink-0"
+                className="font-mono text-xs px-3.5 py-1.5 rounded-full font-semibold"
                 style={{
                   background: `${exp.color}15`,
                   color: exp.color,
-                  border: `1px solid ${exp.color}30`,
+                  border: `1px solid ${exp.color}35`,
                 }}
               >
                 {exp.period}
               </span>
               {exp.current && (
-                <span className="font-mono text-xs" style={{ color: exp.color }}>● Active</span>
+                <span className="font-mono text-[11px] text-accent flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+                  Active Tenure
+                </span>
               )}
             </div>
           </div>
 
-          <div className="space-y-1.5">
+          <div className="space-y-2 mt-4 pt-4 border-t border-white/10">
             {exp.highlights.map((h, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, x: 15 }}
-                animate={inView ? { opacity: 1, x: 0 } : {}}
-                transition={{ delay: 0.3 + i * 0.06 }}
-                className="flex items-start gap-2"
-              >
-                <div className="flex-shrink-0 mt-1.5" style={{ width: 3, height: 3, borderRadius: '50%', background: exp.color }} />
-                <p className="text-xs leading-relaxed" style={{ color: 'var(--muted)' }}>{h}</p>
-              </motion.div>
+              <div key={i} className="flex items-start gap-2.5">
+                <span
+                  className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                  style={{ background: exp.color }}
+                />
+                <p className="font-body text-xs sm:text-sm leading-relaxed text-white/70">
+                  {h}
+                </p>
+              </div>
             ))}
           </div>
         </div>
@@ -139,82 +144,74 @@ function TimelineItem({ exp, index, isLast }) {
 
 export default function Experience() {
   return (
-    <section id="experience" className="relative w-full" style={{ background: 'var(--bg)' }}>
-      {/* Animated background */}
+    <section id="experience" className="relative w-full py-16 md:py-24" style={{ background: 'var(--bg)' }}>
+      {/* Ambient background lighting */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="bg-orb bg-orb--5" />
         <div className="bg-orb bg-orb--6" />
       </div>
 
-      <div className="relative z-10 max-w-5xl mx-auto px-8 py-16">
-        {/* Section label */}
+      <div className="relative z-10 max-w-5xl mx-auto px-6 sm:px-10">
+        {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          className="flex items-center gap-4 mb-4"
+          className="flex items-center gap-3 mb-6"
         >
-          <div style={{ width: 40, height: 1, background: 'var(--accent)' }} />
-          <span className="font-mono text-xs tracking-widest uppercase" style={{ color: 'var(--accent)' }}>
-            04 — Experience
+          <span className="w-10 h-px bg-accent" />
+          <span className="font-mono text-xs tracking-widest uppercase text-accent font-semibold">
+            05 — Professional Track
           </span>
         </motion.div>
 
-        <div className="mb-6">
-          <div className="overflow-hidden">
-            <motion.h2
-              initial={{ y: '100%' }}
-              whileInView={{ y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.9, ease: [0.23, 1, 0.32, 1] }}
-              className="font-display leading-none"
-              style={{ fontSize: 'clamp(32px, 5vw, 64px)', color: 'var(--fg)' }}
-            >
-              WHERE I'VE
-            </motion.h2>
-          </div>
-          <div className="overflow-hidden">
-            <motion.h2
-              initial={{ y: '100%' }}
-              whileInView={{ y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.9, delay: 0.1, ease: [0.23, 1, 0.32, 1] }}
-              className="font-display leading-none gradient-text"
-              style={{ fontSize: 'clamp(32px, 5vw, 64px)' }}
-            >
-              WORKED
-            </motion.h2>
-          </div>
+        <div className="mb-12">
+          <h2 className="font-display text-4xl sm:text-7xl font-black tracking-tight leading-none text-white mb-3">
+            WHERE I'VE <span className="gradient-text">ENGINEERED</span>
+          </h2>
+          <p className="font-body text-sm sm:text-base text-white/60 max-w-lg">
+            A chronological timeline of roles, architectures engineered, and teams scaled.
+          </p>
         </div>
 
-        {/* Timeline */}
-        <div>
+        {/* Timeline Stack */}
+        <div className="mb-12">
           {experiences.map((exp, i) => (
             <TimelineItem key={exp.company} exp={exp} index={i} isLast={i === experiences.length - 1} />
           ))}
         </div>
 
-        {/* Education row */}
+        {/* Academic Foundation & Certifications */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-2 glass rounded-2xl p-5"
-          style={{ border: '1px solid var(--border)' }}
+          className="glass rounded-3xl p-6 sm:p-8 border border-white/10"
         >
-          <div className="flex items-center gap-3 mb-2">
-            <span style={{ fontSize: 24 }}>🎓</span>
-            <h4 className="font-display text-lg" style={{ color: 'var(--accent)' }}>EDUCATION</h4>
+          <div className="flex items-center gap-3 mb-4">
+            <span className="text-2xl">🎓</span>
+            <h4 className="font-display text-xl font-bold text-accent tracking-wide uppercase">
+              ACADEMIC FOUNDATION & SPECIALIZATIONS
+            </h4>
           </div>
-          <div className="grid md:grid-cols-2 gap-4">
+
+          <div className="grid md:grid-cols-2 gap-6 items-center">
             <div>
-              <p className="font-body text-sm" style={{ color: 'var(--fg)' }}>Electronics & Communication Engineering (B.Tech)</p>
-              <p className="font-mono text-xs" style={{ color: 'var(--muted)' }}>Mar Athanasius College of Engineering, Ernakulam</p>
-              <p className="font-mono text-xs mt-0.5" style={{ color: 'var(--accent)' }}>2018 — 2022</p>
+              <p className="font-body font-semibold text-base text-white">
+                B.Tech in Electronics & Communication Engineering
+              </p>
+              <p className="font-mono text-xs text-white/60 mt-0.5">
+                Mar Athanasius College of Engineering, Kothamangalam, Kerala
+              </p>
+              <p className="font-mono text-xs text-accent mt-1">2018 — 2022</p>
             </div>
+
             <div className="flex flex-wrap gap-2">
-              {['IPSR — Advanced Web Dev (PHP)', 'Cyber Prism — Python/Django'].map(cert => (
-                <span key={cert} className="font-mono text-xs px-3 py-1.5 rounded-full" style={{ background: 'rgba(232,255,0,0.08)', color: 'var(--accent)', border: '1px solid rgba(232,255,0,0.2)' }}>
+              {['IPSR — Advanced Web Dev (PHP/Full-Stack)', 'Cyber Prism — Python/Django Architecture'].map((cert) => (
+                <span
+                  key={cert}
+                  className="font-mono text-xs px-3.5 py-2 rounded-full glass text-accent border border-accent/30 flex items-center gap-1.5"
+                >
                   📜 {cert}
                 </span>
               ))}
