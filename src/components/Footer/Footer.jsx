@@ -92,14 +92,30 @@ export default function Footer() {
             ))}
           </motion.div>
 
-          {/* Socials & Back to top */}
+          {/* Socials, Buy Me a Coffee & Back to top */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="flex items-center gap-4"
+            className="flex flex-wrap items-center gap-3 sm:gap-4"
           >
+            {/* Buy Me a Coffee Official Button */}
+            <a
+              href="https://www.buymeacoffee.com/naveentm"
+              target="_blank"
+              rel="noopener noreferrer"
+              onMouseEnter={playHover}
+              className="inline-flex items-center transition-all duration-300 hover:scale-105 active:scale-95 shadow-[0_4px_20px_rgba(255,221,0,0.18)] hover:shadow-[0_6px_28px_rgba(255,221,0,0.35)] rounded-xl overflow-hidden"
+              title="Buy Me a Coffee - Naveen T M"
+            >
+              <img
+                src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
+                alt="Buy Me a Coffee"
+                className="h-[42px] sm:h-[46px] w-auto block object-contain"
+              />
+            </a>
+
             {socials.map((s) => (
               <a
                 key={s.label}

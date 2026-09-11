@@ -121,6 +121,7 @@ export default function Contact({ onSendSuccess }) {
                 { label: 'PHONE', value: '+91 7902765146', href: 'tel:+917902765146' },
                 { label: 'LOCATION', value: 'Ernakulam, Kerala, India [UTC+5:30]' },
                 { label: 'STATUS', value: 'Open for Freelance & Senior Roles' },
+                { label: 'COFFEE', value: 'buymeacoffee.com/naveentm', href: 'https://www.buymeacoffee.com/naveentm' },
               ].map((coord) => (
                 <div
                   key={coord.label}
@@ -130,6 +131,8 @@ export default function Contact({ onSendSuccess }) {
                   {coord.href ? (
                     <a
                       href={coord.href}
+                      target={coord.href.startsWith('http') ? '_blank' : undefined}
+                      rel={coord.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                       onMouseEnter={playHover}
                       className="text-white hover:text-accent transition-colors truncate font-medium"
                     >
@@ -141,6 +144,41 @@ export default function Contact({ onSendSuccess }) {
                 </div>
               ))}
             </div>
+
+            {/* Buy Me a Coffee Sponsor Action */}
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="pt-4 max-w-lg"
+            >
+              <a
+                href="https://www.buymeacoffee.com/naveentm"
+                target="_blank"
+                rel="noopener noreferrer"
+                onMouseEnter={playHover}
+                className="flex items-center justify-between gap-2.5 sm:gap-4 px-3.5 sm:px-4 py-3 rounded-2xl glass border border-amber-400/25 hover:border-amber-400/70 bg-gradient-to-r from-amber-400/[0.08] via-transparent to-amber-400/[0.02] transition-all duration-300 group shadow-lg hover:shadow-[0_0_24px_rgba(255,221,0,0.2)]"
+              >
+                <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+                  <img
+                    src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
+                    alt="Buy Me a Coffee"
+                    className="h-8 sm:h-9 w-auto rounded-lg shadow-sm group-hover:scale-105 transition-transform shrink-0"
+                  />
+                  <div className="flex flex-col text-left min-w-0">
+                    <span className="font-mono text-[11px] sm:text-xs font-semibold text-white group-hover:text-amber-300 transition-colors truncate">
+                      Support My Work & Open Source
+                    </span>
+                    <span className="font-mono text-[9px] sm:text-[10px] text-white/50 tracking-wider truncate">
+                      buymeacoffee.com/naveentm
+                    </span>
+                  </div>
+                </div>
+                <span className="font-mono text-xs text-amber-400 font-semibold group-hover:translate-x-1 transition-transform shrink-0 pl-1">
+                  ☕ ↗
+                </span>
+              </a>
+            </motion.div>
           </div>
 
           {/* Right Column: High-End Contact Form Card - adjusted to right edge */}

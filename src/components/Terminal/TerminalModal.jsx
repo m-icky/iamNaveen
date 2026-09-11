@@ -58,7 +58,8 @@ export default function TerminalModal({ isOpen, onClose }) {
           location: 'LOCATION: Ernakulam, Kerala, India',
           passion: 'PASSION: Building cinematic web experiences.',
           status: 'STATUS: Available for freelance & collaborations',
-          contact: 'CONTACT: naveentmadhu@gmail.com'
+          contact: 'CONTACT: naveentmadhu@gmail.com',
+          coffee: 'COFFEE / SPONSOR: Support my creative work at https://www.buymeacoffee.com/naveentm ☕'
         }
 
         if (cmd.includes('clear')) {
@@ -81,7 +82,7 @@ export default function TerminalModal({ isOpen, onClose }) {
             { type: 'output', text: 'Type a keyword to explore:' },
             { type: 'output', text: '→ stack | specialty | experience | projects' },
             { type: 'output', text: '→ tools | approach | focus | location' },
-            { type: 'output', text: '→ passion | status | contact' },
+            { type: 'output', text: '→ passion | status | contact | coffee' },
           ]
         }
 
@@ -103,7 +104,8 @@ export default function TerminalModal({ isOpen, onClose }) {
     'location',
     'passion',
     'status',
-    'contact'
+    'contact',
+    'coffee'
   ]
 
   const suggestions = commands.filter(cmd =>

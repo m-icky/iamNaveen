@@ -251,7 +251,7 @@ export default function Nav({ toggleTerminal, scrollToSection }) {
                 </button>
               </div>
 
-              <div className="flex items-center gap-6 font-mono text-xs text-white/40">
+              <div className="flex flex-wrap items-center gap-4 sm:gap-6 font-mono text-xs text-white/40">
                 <a
                   href="https://github.com/m-icky"
                   target="_blank"
@@ -267,6 +267,14 @@ export default function Nav({ toggleTerminal, scrollToSection }) {
                   className="hover:text-white transition-colors"
                 >
                   LinkedIn
+                </a>
+                <a
+                  href="https://www.buymeacoffee.com/naveentm"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-amber-400 hover:text-amber-300 font-semibold transition-colors flex items-center gap-1"
+                >
+                  ☕ Buy Me a Coffee
                 </a>
                 <a
                   href="mailto:naveentmadhu@gmail.com"
