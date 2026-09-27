@@ -85,7 +85,7 @@ const SKILLS = [
   },
   {
     id: 'tiptap',
-    name: 'TipTap v2',
+    name: 'TipTap v3',
     category: 'collab',
     badge: 'RICH TEXT',
     level: 92,
@@ -296,7 +296,7 @@ export default function TechOrbit() {
             </div>
 
             <div className="px-4 py-2.5 rounded-2xl glass border border-white/15 shadow-lg flex items-center gap-2.5">
-              <span className="font-display font-black text-xl sm:text-2xl text-white">25+</span>
+              <span className="font-display font-black text-xl sm:text-2xl text-white">35+</span>
               <div className="flex flex-col">
                 <span className="font-mono text-[9px] uppercase tracking-wider text-accent font-medium">Production</span>
                 <span className="font-mono text-[10px] uppercase tracking-wider font-semibold text-white">Shipped</span>
@@ -470,8 +470,8 @@ export default function TechOrbit() {
                       boxShadow: `0 0 30px ${currentSkill.color}45, inset 0 0 15px ${currentSkill.color}35`,
                     }}
                   >
-                    <span className="font-display font-black text-xl sm:text-2xl tracking-wider text-white">NTM</span>
-                    <span className="font-mono text-[9px] uppercase tracking-widest text-[#E8FF00] font-semibold">DEV_CORE</span>
+                    {/* <span className="font-display font-black text-xl sm:text-2xl tracking-wider text-white">N</span> */}
+                    <span className="font-mono text-[9px] uppercase tracking-widest text-[#E8FF00] font-semibold">CORE_DEV</span>
                   </motion.div>
                 </div>
               </div>

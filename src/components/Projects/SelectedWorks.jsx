@@ -11,7 +11,7 @@ const projects = [
     title: 'RVRite Editor',
     subtitle: 'Collaborative Word Document Architecture',
     description: 'Full-featured enterprise document editor featuring zero-latency real-time collaboration, tracked changes, granular version history, and structured XML conversion pipelines. Led complete frontend engineering.',
-    tech: ['React.js', 'TipTap v2', 'ProseMirror', 'Laravel', 'MySQL'],
+    tech: ['React.js', 'TipTap v3', 'ProseMirror', 'Laravel', 'MySQL'],
     color: '#E8FF00',
     bg: 'linear-gradient(145deg, #181900, #0a0b00)',
     emoji: '📄',
@@ -314,7 +314,7 @@ export default function SelectedWorks() {
           style={{ willChange: 'transform' }}
         >
           {/* Introductory Narrative Card */}
-          <div
+          {/* <div
             className="rounded-3xl p-8 sm:p-10 glass border border-white/10 flex flex-col justify-between shrink-0"
             style={{
               width: 'clamp(280px, 80vw, 380px)',
@@ -340,7 +340,7 @@ export default function SelectedWorks() {
               <span>SCROLL DOWN ↓</span>
               <span className="animate-pulse">SLIDE RIGHT →</span>
             </div>
-          </div>
+          </div> */}
 
           {/* 8 Project Cards */}
           {projects.map((project, i) => (
@@ -361,11 +361,13 @@ export default function SelectedWorks() {
                 ✓
               </div>
               <h4 className="font-display text-2xl font-bold text-white mb-2">
-                ALL 8 WORKS VIEWED
+                For more visit:
               </h4>
-              <p className="font-body text-xs text-white/60 max-w-[200px]">
-                Continue scrolling down to explore the Retro Arcade lab.
-              </p>
+              <a href="https://github.com/m-icky" target="_blank" rel="noopener noreferrer">
+                <p className="font-body text-xs text-white/60 max-w-[200px]">
+                  github.com/m-icky
+                </p>
+              </a>
             </div>
             <div className="font-mono text-xs text-accent animate-bounce">
               SCROLL DOWN TO ADVANCE ↓

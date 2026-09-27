@@ -11,7 +11,7 @@ const experiences = [
     current: true,
     highlights: [
       'Spearheaded the complete frontend engineering of an enterprise Google Docs–style collaborative word processor',
-      'Engineered real-time collaborative editing pipelines using ProseMirror & TipTap v2 with step mapping',
+      'Engineered real-time collaborative editing pipelines using ProseMirror & TipTap v3 with step mapping',
       'Implemented tracked changes, revision history, and structured roundtrip XML export systems',
       'Architected article management and high-performance rich text formatting components',
       'Stack: React.js, TipTap, ProseMirror, Laravel, MySQL, Tailwind CSS',

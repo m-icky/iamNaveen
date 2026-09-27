@@ -6,7 +6,7 @@ import useSound from '../../hooks/useSound'
 const skillsData = [
   { name: 'React JS', category: 'core', icon: '⚛️', level: 96, color: '#61DAFB', desc: 'Advanced component architecture, custom hooks, concurrent pipelines & performance profiling' },
   { name: 'ProseMirror', category: 'collab', icon: '📝', level: 95, color: '#FF6B35', desc: 'Rich-text schema transforms, transaction mapping, collaborative steps & structured XML roundtripping' },
-  { name: 'TipTap v2', category: 'collab', icon: '⚡', level: 92, color: '#A855F7', desc: 'Headless extension ecosystem, custom node views, real-time sync & collaboration tokens' },
+  { name: 'TipTap v3', category: 'collab', icon: '⚡', level: 92, color: '#A855F7', desc: 'Headless extension ecosystem, custom node views, real-time sync & collaboration tokens' },
   { name: 'Three.js / R3F', category: 'creative', icon: '🧊', level: 82, color: '#E8FF00', desc: 'WebGL 3D scenes, custom shaders, Rapier physics, particle simulations & canvas optimization' },
   { name: 'JavaScript ES6+', category: 'core', icon: '⚡', level: 94, color: '#F7DF1E', desc: 'Modern async patterns, Web APIs, functional architectures & sub-millisecond execution' },
   { name: 'TailwindCSS', category: 'core', icon: '🎨', level: 96, color: '#38BDF8', desc: 'Utility-first tokens, dynamic responsive layouts, dark/light theme systems' },

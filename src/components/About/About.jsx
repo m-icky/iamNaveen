@@ -111,7 +111,7 @@ export default function About() {
                       Collaborative Editors
                     </div>
                     <div className="font-mono text-xs text-white/50 mt-1">
-                      ProseMirror · TipTap v2 · Tracked Changes · XML Schema
+                      ProseMirror · TipTap v3 · Tracked Changes · XML Schema
                     </div>
                   </div>
 

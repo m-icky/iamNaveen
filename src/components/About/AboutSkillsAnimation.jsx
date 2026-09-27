@@ -85,7 +85,7 @@ const SKILLS = [
   },
   {
     id: 'tiptap',
-    name: 'TipTap v2',
+    name: 'TipTap v3',
     category: 'collab',
     badge: 'RICH TEXT',
     level: 92,

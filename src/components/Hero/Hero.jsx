@@ -193,7 +193,7 @@ export default function Hero({ scrollToSection }) {
                   Frontend Architecture & Motion Systems
                 </p>
                 <p className="font-mono text-xs mt-1 text-white/60 tracking-wider">
-                  React 18 · ProseMirror · TipTap · Three.js · Tailwind · GSAP
+                  React 19 · JavaScript (ES6+) · HTML-5 & CSS-3 · Three.js · Tailwind · GSAP · Framer Motion
                 </p>
                 <p className="font-mono text-[10px] mt-1 text-white/35">
                   Currently at RSGP Consulting • Based in Kerala, India
@@ -204,7 +204,7 @@ export default function Hero({ scrollToSection }) {
             {/* Subtext description with dynamic TextType */}
             <motion.div variants={item} className="max-w-xl mb-10 text-center lg:text-left">
               <TextType
-                text="Architecting Google Docs–style collaborative editors, WebGL 3D physics interfaces, and award-winning digital experiences."
+                text="Designing and developing scalable, high-performance digital products with a strong focus on usability, accessibility, and modern technology."
                 as="p"
                 className="font-body text-base sm:text-lg leading-relaxed text-white/70"
                 typingSpeed={26}

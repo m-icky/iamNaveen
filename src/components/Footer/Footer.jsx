@@ -54,7 +54,7 @@ export default function Footer() {
               <div className="w-9 h-9 rounded-xl glass flex items-center justify-center font-display font-bold text-accent">
                 N
               </div>
-              <span className="font-display text-3xl font-extrabold text-white tracking-tight">
+              <span className="font-display text-2xl font-extrabold text-white tracking-tight">
                 NAVEEN T M
               </span>
             </div>
@@ -129,16 +129,6 @@ export default function Footer() {
                 {s.icon}
               </a>
             ))}
-
-            {/* Back to top magnetic pill */}
-            <button
-              onClick={scrollToTop}
-              onMouseEnter={playHover}
-              title="Return to top"
-              className="px-4 py-2.5 rounded-xl glass border border-white/10 hover:border-accent/60 font-mono text-xs text-white/70 hover:text-accent transition-all duration-300"
-            >
-              ↑ TOP
-            </button>
           </motion.div>
         </div>
 
